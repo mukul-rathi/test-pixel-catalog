@@ -42,13 +42,42 @@
   <meta property="product:category" content="<?php echo_param_or_default("category", "Tech Supplies"); ?>">
   <meta property="product:availability" content="<?php echo_param_or_default("availability", "in stock"); ?>">
   <meta property="product:condition" content="<?php echo_param_or_default("condition", "new"); ?>">
-  <meta property="product:price:amount" content="<?php echo_param_or_default("price_amount", "99"); ?>">
-  <meta property="product:price:currency" content="<?php echo_param_or_default("price_currency", "GBP"); ?>">
+  <meta id="amount" property="product:price:amount" content="<?php echo_param_or_default("price_amount", "99"); ?>">
+  <meta id="currency" property="product:price:currency" content="<?php echo_param_or_default("price_currency", "GBP"); ?>">
   <meta property="product:retailer_item_id" content="<?php echo_param_or_default("retailer_item_id", "id_1"); ?>">
   <!-- End Open Graph Metadata -->
 
 </head>
 <body>
   <h1> Hello World! </h1>
+  <button type="button" id="addToCartButton">Test add to cart!</button>
+  <button type="button" id="purchaseButton">Test purchase!</button>
+
+
+  <script>
+    fbq('track', 'ViewContent', {
+      content_type: 'product',
+    });
+
+    document.getElementById('addToCartButton').addEventListener('click', function(e) {
+      e.preventDefault();
+      console.log("add to cart");
+      fbq('track', 'AddToCart', {
+        content_type: 'product',
+      });
+}, false);
+document.getElementById('purchaseButton').addEventListener('click', function(e) {
+  e.preventDefault();
+  const val = document.getElementById('amount').getAttribute('content');
+  const cur = document.getElementById('currency').getAttribute('content');
+  console.log("purchase");
+  fbq('track','Purchase', {
+    content_type: 'product',
+    value: val,
+    currency: cur
+
+  });
+}, false);
+  </script>
 </body>
 </html>
