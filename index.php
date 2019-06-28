@@ -33,23 +33,35 @@
 
     <!-- Open Graph Metadata -->
   <meta property="og:type" r="website">
-  <meta property="og:title" content="<?php echo_param_or_default("title", "some title"); ?>">
-  <meta property="og:url" content="<?php echo "https://test-pixel-catalog.herokuapp.com/".$_SERVER['REQUEST_URI']; ?>">
+  <meta id="title" property="og:title" content="<?php echo_param_or_default("title", "some product"); ?>">
+  <meta property="og:url" content="<?php echo "https://test-pixel-catalog.herokuapp.com".$_SERVER['REQUEST_URI']; ?>">
   <meta property="og:description" content="<?php echo_param_or_default("description", "some description"); ?>">
   <meta property="og:image" content="<?php echo_param_or_default("image_url", "https://example.org/image.jpg"); ?>">
   <meta property="og:site_name" content="Mukul's test catalog">
-  <meta property="product:brand" content="<?php echo_param_or_default("brand", "Foo Brand"); ?>">
+  <meta property="product:brand" content="<?php echo_param_or_default("title", "some product"); ?>">
   <meta property="product:category" content="<?php echo_param_or_default("category", "Tech Supplies"); ?>">
   <meta property="product:availability" content="<?php echo_param_or_default("availability", "in stock"); ?>">
   <meta property="product:condition" content="<?php echo_param_or_default("condition", "new"); ?>">
-  <meta id="amount" property="product:price:amount" content="<?php echo_param_or_default("price_amount", "99"); ?>">
-  <meta id="currency" property="product:price:currency" content="<?php echo_param_or_default("price_currency", "GBP"); ?>">
+  <meta id="amount"  property="product:price:amount" content="<?php echo_param_or_default("price_amount", "99"); ?>">
+  <meta id="currency"  property="product:price:currency" content="<?php echo_param_or_default("price_currency", "GBP"); ?>">
   <meta property="product:retailer_item_id" content="<?php echo_param_or_default("retailer_item_id", "id_1"); ?>">
   <!-- End Open Graph Metadata -->
 
 </head>
 <body>
-  <h1> Hello World! </h1>
+  <h1>
+      <script> document.getElementById('title').getAttribute('content') </script>
+  </h1>
+  <ul>
+      <script>
+  for(let metaTag of document.getElementsByTagName("meta")){
+    let li = document.createElement('li');
+    li.innerHTML =  metaTag.getAttribute('property') + ": " + metaTag.getAttribute('content');
+    document.body.appendChild(li);
+
+  };
+</script>
+  </ul>
   <button type="button" id="addToCartButton">Test add to cart!</button>
   <button type="button" id="purchaseButton">Test purchase!</button>
 
@@ -79,5 +91,22 @@ document.getElementById('purchaseButton').addEventListener('click', function(e) 
   });
 }, false);
   </script>
+  <div itemscope itemtype="">
+     <div itemscope itemtype="http://schema.org/Product">
+       <span itemprop="name"><?php echo_param_or_default("title", "some product"); ?></span>
+       <span itemprop="description"><?php echo_param_or_default("description", "some description"); ?></span>
+       <span itemprop="brand"><?php echo_param_or_default("brand", "some brand"); ?></span>
+       <span itemprop="category"><?php echo_param_or_default("category", "Tech Supplies"); ?></span>
+       <span itemprop="productID"><?php echo_param_or_default("retailer_item_id", "id_1"); ?></span>
+       <a itemprop="url" href="<?php echo "https://test-pixel-catalog.herokuapp.com".$_SERVER['REQUEST_URI']; ?>">url</a>
+       <a itemprop="image" href="<?php echo_param_or_default("image_url", "https://example.org/image.jpg"); ?>">image</a>
+       <div itemscope itemtype="http://schema.org/Offer">
+         <link itemprop="itemCondition" href="http://schema.org/NewCondition" />
+         <link itemprop="availability" href="http://schema.org/InStock" />
+         <meta itemprop="price" content="<?php echo_param_or_default("price_amount", "99"); ?>">
+         <meta itemprop="priceCurrency" content="<?php echo_param_or_default("price_currency", "GBP"); ?>">
+       </div>
+     </div>
+   </div>
 </body>
 </html>
