@@ -41,6 +41,7 @@
   <meta property="product:brand" content="<?php echo_param_or_default("title", "some product"); ?>">
   <meta property="product:category" content="<?php echo_param_or_default("category", "Tech Supplies"); ?>">
   <meta property="product:availability" content="<?php echo_param_or_default("availability", "in stock"); ?>">
+  <meta property="product:inventory" content="<?php echo_param_or_default("inventory", "50"); ?>">
   <meta property="product:condition" content="<?php echo_param_or_default("condition", "new"); ?>">
   <meta id="amount"  property="product:price:amount" content="<?php echo_param_or_default("price_amount", "99"); ?>">
   <meta id="currency"  property="product:price:currency" content="<?php echo_param_or_default("price_currency", "GBP"); ?>">
@@ -103,6 +104,7 @@ document.getElementById('purchaseButton').addEventListener('click', function(e) 
        <div itemscope itemtype="http://schema.org/Offer">
          <link itemprop="itemCondition" href="http://schema.org/NewCondition" />
          <link itemprop="availability" href="http://schema.org/InStock" />
+         <meta itemprop="inventoryLevel" content="<?php echo_param_or_default("inventory", "50"); ?>">
          <meta itemprop="price" content="<?php echo_param_or_default("price_amount", "99"); ?>">
          <meta itemprop="priceCurrency" content="<?php echo_param_or_default("price_currency", "GBP"); ?>">
        </div>
