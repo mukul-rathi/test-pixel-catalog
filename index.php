@@ -41,11 +41,11 @@
   <meta property="product:brand" content="<?php echo_param_or_default("title", "some product"); ?>">
   <meta property="product:category" content="<?php echo_param_or_default("category", "Tech Supplies"); ?>">
   <meta property="product:availability" content="<?php echo_param_or_default("availability", "in stock"); ?>">
-  <meta id="inventory" property="product:inventory" content="<?php echo_param_or_default("inventory", "50"); ?>">
+  <meta id="inventory" property="product:inventory" content="<?php echo_param_or_default("inventory",50); ?>">
   <meta property="product:condition" content="<?php echo_param_or_default("condition", "new"); ?>">
   <meta id="amount"  property="product:price:amount" content="<?php echo_param_or_default("price_amount", "99"); ?>">
   <meta id="currency"  property="product:price:currency" content="<?php echo_param_or_default("price_currency", "GBP"); ?>">
-  <meta property="product:retailer_item_id" content="<?php echo_param_or_default("retailer_item_id", "id_1"); ?>">
+  <meta id="prod_id" property="product:retailer_item_id" content="<?php echo_param_or_default("retailer_item_id", "id_1"); ?>">
   <!-- End Open Graph Metadata -->
 
 </head>
@@ -68,28 +68,33 @@
 
 
   <script>
+  const prodId = document.getElementById('prod_id').getAttribute('content');
     fbq('track', 'ViewContent', {
       content_type: 'product',
+      content_id: prodId
+
     });
 
     document.getElementById('addToCartButton').addEventListener('click', function(e) {
       e.preventDefault();
-      const inv = document.getElementById('inventory').getAttribute('content');
+      const prodId = document.getElementById('prod_id').getAttribute('content');
       console.log("add to cart");
       fbq('track', 'AddToCart', {
         content_type: 'product',
-        inventory: inv
+        content_id: prodId
       });
 }, false);
 document.getElementById('purchaseButton').addEventListener('click', function(e) {
   e.preventDefault();
   const val = document.getElementById('amount').getAttribute('content');
   const cur = document.getElementById('currency').getAttribute('content');
+  const prodId = document.getElementById('prod_id').getAttribute('content');
   console.log("purchase");
   fbq('track','Purchase', {
     content_type: 'product',
     value: val,
-    currency: cur
+    currency: cur,
+    content_id: prodId
 
   });
 }, false);
